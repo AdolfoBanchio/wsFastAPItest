@@ -1,5 +1,5 @@
 # wsFastAPItest
-
+Ejemplo **basico** sobre utilizacion de websockets
 Requisitos: 
   fastapi y ponyorm
 1. Exportar pythonpath
