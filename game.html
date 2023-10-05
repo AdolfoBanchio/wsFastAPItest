@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Info</title>
+</head>
+<body>
+    <h1>Game Information</h1>
+    <div>
+        <div> 
+            <!-- Input text and button -->
+            <input type="text" id="message-input" placeholder="Enter message">
+            <button id="send-message" on-click>Send</button>
+        </div>
+        <div id="game-info">
+            <!-- Game information will be displayed here -->
+        </div>
+    </div>
+    <script>
+        async function getGameInfo() {
+            const gameInfoDiv = document.getElementById('game-info');
+            const gameWebSocket = new WebSocket(`ws://0.0.0.0:8000/ws/game/1`); // Replace '1' with the desired game ID
+    
+            gameWebSocket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                const gameInfo = JSON.stringify(data.game, null, 4); // Format JSON for display
+                gameInfoDiv.innerText = gameInfo;
+            };
+    
+            gameWebSocket.onerror = (error) => {
+                console.error(`WebSocket error: ${error}`);
+            };
+        }
+    
+        window.addEventListener('DOMContentLoaded', () => {
+            getGameInfo();
+        });
+    </script>
+</body>
+</html>
